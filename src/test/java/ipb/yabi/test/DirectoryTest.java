@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @SpringBootTest
-public class databaseTest {
+public class DirectoryTest {
     
     @Autowired
     DirectoryRepository repo;
@@ -51,7 +51,6 @@ public class databaseTest {
     public void checkDirecotryGotSavedAndHasID() {
         repo.save(dir);
         Directory d = repo.findAll().iterator().next();
-        System.out.println(d);
         assertThat(d.getName(),is(dir.getName()));
         assertNotNull(d.getId());
     }

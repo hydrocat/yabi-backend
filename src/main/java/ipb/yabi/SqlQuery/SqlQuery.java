@@ -1,4 +1,4 @@
-package ipb.yabi.DbQuery;
+package ipb.yabi.SqlQuery;
 
 import ipb.yabi.Directory.Directory;
 import javax.persistence.Entity;
@@ -12,7 +12,7 @@ import lombok.Data;
  * @author hydrocat
  */
 @Entity
-public @Data class DbQuery {
+public @Data class SqlQuery {
     
     @Id
     @GeneratedValue
