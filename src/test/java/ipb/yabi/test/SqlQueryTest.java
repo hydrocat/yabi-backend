@@ -39,7 +39,7 @@ public class SqlQueryTest {
     
     @Before
     public void begin() {
-        System.out.println("BEGINNING TEST");
+        System.out.println("BEGINNING SQL QUERY TEST");
         dir = new Directory();
         dir.setConnectionString("This is a connection String");
         dir.setName("TestDirectory");
@@ -58,7 +58,7 @@ public class SqlQueryTest {
     
     @After
     public void end() {
-        System.out.println("END TEST");
+        System.out.println("END SQL QUERY TEST");
     }
     
     @Test
