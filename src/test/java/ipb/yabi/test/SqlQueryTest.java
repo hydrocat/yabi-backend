@@ -16,6 +16,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -25,6 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @SpringBootTest
+@ActiveProfiles("test")
 public class SqlQueryTest {
 
 
@@ -39,7 +42,6 @@ public class SqlQueryTest {
     
     @Before
     public void begin() {
-        System.out.println("BEGINNING SQL QUERY TEST");
         dir = new Directory();
         dir.setConnectionString("This is a connection String");
         dir.setName("TestDirectory");
@@ -50,15 +52,7 @@ public class SqlQueryTest {
         query.setCommand("This is a sql statement for testing purposes");
         query.setDescription("This is a test description");
         query.setName("TestQuery");
-  //      dirRepo.save(dir);
-//        Directory d = dirRepo.findByName("TestDirectory");
-  //      query.setDirectory(dir);
-     //   queryRepo.save(query);
-    }
-    
-    @After
-    public void end() {
-        System.out.println("END SQL QUERY TEST");
+
     }
     
     @Test
