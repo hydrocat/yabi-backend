@@ -1,6 +1,7 @@
 package ipb.yabi.DatabaseReader;
 
 import ipb.yabi.Directory.Directory;
+import ipb.yabi.Directory.DirectoryRepository;
 import ipb.yabi.SqlQuery.SqlQuery;
 import ipb.yabi.SqlQuery.SqlQueryRepository;
 import java.sql.Connection;
@@ -11,31 +12,41 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 public class DatabaseReader {
 
     @Autowired
     SqlQueryRepository queryRepo;
+    @Autowired
+    DirectoryRepository dirRepo;
 
-    @RequestMapping("/runQuery")
-    public ArrayList<ArrayList<String>> runQuery(
-            @RequestParam("queryName") String queryName)
+    public DatabaseReader(SqlQueryRepository repo, DirectoryRepository dr) {
+        queryRepo = repo;
+        dirRepo = dr;
+    }
+
+    public DatabaseReader() {
+    }
+
+    public ArrayList<ArrayList<String>> runQuery(@PathVariable String queryId)
             throws SQLException {
-        System.out.println("Executing query" + queryName);
         ArrayList<ArrayList<String>> result = new ArrayList<>();
 
-        SqlQuery query = queryRepo.findByName(queryName);
+        SqlQuery query = queryRepo.findById(Long.parseLong(queryId)).get();
+        System.out.println("Command: " + query.getCommand());
         if (query == null) {
             System.out.println("Query not found");
             return result;
         }
         Directory dir = query.getDirectory();
+        System.out.println("Database: " + dir.getName());
 
         Connection con = DriverManager.getConnection(
                 dir.getConnectionString(),

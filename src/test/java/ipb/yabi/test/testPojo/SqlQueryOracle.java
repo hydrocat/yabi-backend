@@ -10,9 +10,9 @@ public class SqlQueryOracle implements SqlQueryForTesting{
 
     public static SqlQuery selectAllArtists() {
         return new SqlQuery(21l,
-                "select Name from Artist;",
-                "Artists",
-                "See the name of all artists",
+                "select Name from Artist",
+                "ORACLE Artists",
+                "ORACLE See the name of all artists",
                 null);
     }
 
