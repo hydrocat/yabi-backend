@@ -13,13 +13,13 @@ public class SqlQueryOracle implements SqlQueryForTesting{
                 "select Name from Artist",
                 "ORACLE Artists",
                 "ORACLE See the name of all artists",
-                null);
+                null,null);
     }
 
     public static SqlQuery calculateTotalByMediaType(){
         return new SqlQuery(22l,
                 "select sum(Track.UnitPrice) as Name, MediaTypeId from Track group by Track.MediaTypeId;",
-                "totalByMediaType", "Calculates the total by media type", null);
+                "totalByMediaType", "Calculates the total by media type", null,null);
     }
     
 }

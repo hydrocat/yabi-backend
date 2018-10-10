@@ -30,42 +30,42 @@ public class DirectoryTest {
     public void pass() {
         
     }
-//    
-//    @BeforeClass
-//    public static void setUp(){
-//        dir = new Directory();
-//        dir.setConnectionString("jdbc:mysql/qualquercoisa/yabi");
-//        dir.setName("Test Directory");
-//        dir.setPassword("123");
-//        dir.setUsername("root");
-//        dir.setId(0l);
-//    }
-//    
-//    @Test
-//    public void testDatabaseConnection(){
-//        assertThat(repo.count(),is(0l));
-//    }
-//    
-//    @Test
-//    public void saveDirectory(){
-//        repo.save(dir);
-//        assertThat(repo.count(),is(1l));
-//    }
-//    
-//    @Test
-//    public void checkDirecotryGotSavedAndHasID() {
-//        repo.save(dir);
-//        Directory d = repo.findAll().iterator().next();
-//        assertThat(d.getName(),is(dir.getName()));
-//        assertNotNull(d.getId());
-//    }
-//    
-//    @Test
-//    public void checkDirectoryFindByName() {
-//        repo.save(dir);
-//        Directory d = repo.findByName(dir.getName());
-//        assertTrue(d.getName().equals(dir.getName()));
-//    }
-//     
-//    
+    
+    @BeforeClass
+    public static void setUp(){
+        dir = new Directory();
+        dir.setConnectionString("jdbc:mysql/qualquercoisa/yabi");
+        dir.setName("Test Directory");
+        dir.setPassword("123");
+        dir.setUsername("root");
+        dir.setId(0l);
+    }
+    
+    @Test
+    public void testDatabaseConnection(){
+        assertThat(repo.count(),is(0l));
+    }
+    
+    @Test
+    public void saveDirectory(){
+        repo.save(dir);
+        assertThat(repo.count(),is(1l));
+    }
+    
+    @Test
+    public void checkDirecotryGotSavedAndHasID() {
+        repo.save(dir);
+        Directory d = repo.findAll().iterator().next();
+        assertThat(d.getName(),is(dir.getName()));
+        assertNotNull(d.getId());
+    }
+    
+    @Test
+    public void checkDirectoryFindByName() {
+        repo.save(dir);
+        Directory d = repo.findByName(dir.getName());
+        assertTrue(d.getName().equals(dir.getName()));
+    }
+     
+    
 }

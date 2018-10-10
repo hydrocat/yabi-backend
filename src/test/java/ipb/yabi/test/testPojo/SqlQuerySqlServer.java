@@ -13,12 +13,12 @@ public class SqlQuerySqlServer implements SqlQueryForTesting {
                 "select Name from Artist;",
                 "Artists",
                 "See the name of all artists",
-                null);
+                null,null);
     }
 
     public static SqlQuery calculateTotalByMediaType() {
         return new SqlQuery(22l,
                 "select sum(Track.UnitPrice) as Price, MediaTypeId from Track group by Track.MediaTypeId;",
-                "totalByMediaType", "Calculates the total by media type", null);
+                "totalByMediaType", "Calculates the total by media type", null,null);
     }
 }
