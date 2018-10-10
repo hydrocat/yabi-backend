@@ -43,56 +43,56 @@ public class SqlQueryTest {
     public void pass() {
         
     }
-
-    
-    @Before
-    public void begin() {
-        dir = new Directory();
-        dir.setConnectionString("This is a connection String");
-        dir.setName("TestDirectory");
-        dir.setPassword("password");
-        dir.setUsername("root");
-
-        query = new SqlQuery();
-        query.setCommand("This is a sql statement for testing purposes");
-        query.setDescription("This is a test description");
-        query.setName("TestQuery");
-
-    }
-    
-    @Test
-    public void testDirectory() {
-        Directory d = dirRepo.save(dir);
-        assertThat(d, is(not(nullValue())));
-    }
-
-    @Test
-    public void connectionTest() {
-        assertThat(queryRepo.count(), is(0l));
-    }
-    
-    @Test
-    public void saveQuery() {
-        SqlQuery s = queryRepo.save(query);
-        assertThat(s, is(not(nullValue())));
-    }
-    
-    @Test
-    public void findSqlByName() {
-        queryRepo.save(query);
-        SqlQuery s = queryRepo.findByName("TestQuery");
-        assertThat(s, is(not(nullValue())));
-    }
-    
-    @Test
-    public void saveWithDirectory() {
-        Directory d = dirRepo.save(dir);
-        query.setDirectory(d);
-        
-        SqlQuery s = queryRepo.save(query);
-        assertThat(s.getId(), is(not(nullValue())));
-        assertThat(s.getDirectory(), is(not(nullValue())));
-        assertThat(s.getDirectory().getName(), is("TestDirectory"));
-    }
+//
+//    
+//    @Before
+//    public void begin() {
+//        dir = new Directory();
+//        dir.setConnectionString("This is a connection String");
+//        dir.setName("TestDirectory");
+//        dir.setPassword("password");
+//        dir.setUsername("root");
+//
+//        query = new SqlQuery();
+//        query.setCommand("This is a sql statement for testing purposes");
+//        query.setDescription("This is a test description");
+//        query.setName("TestQuery");
+//
+//    }
+//    
+//    @Test
+//    public void testDirectory() {
+//        Directory d = dirRepo.save(dir);
+//        assertThat(d, is(not(nullValue())));
+//    }
+//
+//    @Test
+//    public void connectionTest() {
+//        assertThat(queryRepo.count(), is(0l));
+//    }
+//    
+//    @Test
+//    public void saveQuery() {
+//        SqlQuery s = queryRepo.save(query);
+//        assertThat(s, is(not(nullValue())));
+//    }
+//    
+//    @Test
+//    public void findSqlByName() {
+//        queryRepo.save(query);
+//        SqlQuery s = queryRepo.findByName("TestQuery");
+//        assertThat(s, is(not(nullValue())));
+//    }
+//    
+//    @Test
+//    public void saveWithDirectory() {
+//        Directory d = dirRepo.save(dir);
+//        query.setDirectory(d);
+//        
+//        SqlQuery s = queryRepo.save(query);
+//        assertThat(s.getId(), is(not(nullValue())));
+//        assertThat(s.getDirectory(), is(not(nullValue())));
+//        assertThat(s.getDirectory().getName(), is("TestDirectory"));
+//    }
 
 }

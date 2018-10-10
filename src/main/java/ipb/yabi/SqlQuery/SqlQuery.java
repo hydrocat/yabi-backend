@@ -30,6 +30,7 @@ public @Data class SqlQuery {
     private String command;
     private String name;
     private String description;
+    
     @ManyToOne
     private Directory directory;
 
