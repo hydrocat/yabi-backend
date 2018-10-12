@@ -1,5 +1,6 @@
 package ipb.yabi.YabiUser;
 
+import ipb.yabi.PermissionTree.PermissionTree;
 import ipb.yabi.UserGroup.UserGroup;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,6 @@ public @Data class YabiUser {
     private String name;
     
     @OneToOne
-    @JoinColumn(name="group_id")
-    private UserGroup group;
+    private PermissionTree permission;
     
 }

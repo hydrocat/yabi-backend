@@ -12,8 +12,8 @@ import javax.persistence.Entity;
 @Entity
 public class PermissionTree {
 
-    //@Id
-    //@GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
     private String nodePath;
     private String name;
