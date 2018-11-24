@@ -12,19 +12,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 public class DatabaseReader {
 
-    @Autowired
     SqlQueryRepository queryRepo;
-    @Autowired
     DirectoryRepository dirRepo;
 
     public DatabaseReader(SqlQueryRepository repo, DirectoryRepository dr) {
@@ -39,6 +31,7 @@ public class DatabaseReader {
             throws SQLException {
         ArrayList<ArrayList<String>> result = new ArrayList<>();
 
+        System.out.println(queryRepo.findAll());
         SqlQuery query = queryRepo.findById(Long.parseLong(queryId)).get();
         System.out.println("Command: " + query.getCommand());
         if (query == null) {

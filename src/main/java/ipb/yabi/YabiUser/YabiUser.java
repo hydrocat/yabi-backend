@@ -1,12 +1,11 @@
 package ipb.yabi.YabiUser;
 
 import ipb.yabi.PermissionTree.PermissionTree;
-import ipb.yabi.UserGroup.UserGroup;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,15 +17,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public @Data class YabiUser { 
-    
+public @Data class YabiUser {
+
     @Id
     @GeneratedValue
     private Long id;
-    
+
     private String name;
+
+    @ManyToMany
+    private List<PermissionTree> permission;
     
-    @OneToOne
-    private PermissionTree permission;
-    
+
 }
