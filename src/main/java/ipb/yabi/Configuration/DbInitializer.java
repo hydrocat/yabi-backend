@@ -2,6 +2,9 @@ package ipb.yabi.Configuration;
 
 import ipb.yabi.PermissionTree.PermissionRepository;
 import ipb.yabi.PermissionTree.PermissionTree;
+import ipb.yabi.YabiUser.YabiUser;
+import ipb.yabi.YabiUser.YabiUserRepository;
+import java.util.ArrayList;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -17,16 +20,23 @@ import org.springframework.stereotype.Component;
 public class DbInitializer implements CommandLineRunner {
 
     private final PermissionRepository pr;
+    private final YabiUserRepository userRepo;
 
-    public DbInitializer(PermissionRepository pr) {
+    public DbInitializer(PermissionRepository pr, YabiUserRepository ur) {
         this.pr = pr;
+        this.userRepo = ur;
     }
 
     @Override
     public void run(String... strings) throws Exception {
         pr.deleteAll();
         System.out.println(PermissionTree.rootNode());
-        pr.save(PermissionTree.rootNode());
+        PermissionTree pt = pr.save(PermissionTree.rootNode());
+        
+        ArrayList<PermissionTree> apt = new ArrayList<>();
+        apt.add(pt);
+        userRepo.save( new YabiUser(0l, "admin", apt));
+        
         System.out.println(" -- Database has been initialized");
     }
 }

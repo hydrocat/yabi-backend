@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
@@ -23,8 +22,7 @@ public class PermissionTreeController {
         List<PermissionTree> permissions = pr.findAllBynodePathStartingWith( node.getNodePath() );
         Integer elementCount = permissions.size();
         
-        permissions.stream()
-                .forEach( pr::delete);
+        permissions.forEach( pr::delete);
         
         return elementCount.toString();
     }

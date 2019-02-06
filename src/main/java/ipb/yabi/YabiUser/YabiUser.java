@@ -3,6 +3,7 @@ package ipb.yabi.YabiUser;
 import ipb.yabi.PermissionTree.PermissionTree;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -25,7 +26,7 @@ public @Data class YabiUser {
 
     private String name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<PermissionTree> permission;
     
 
