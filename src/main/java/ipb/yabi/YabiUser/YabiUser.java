@@ -2,6 +2,7 @@ package ipb.yabi.YabiUser;
 
 import ipb.yabi.PermissionTree.PermissionTree;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,6 +25,7 @@ public @Data class YabiUser {
     @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)

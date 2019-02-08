@@ -35,7 +35,8 @@ public class AuthProvider implements AuthenticationProvider {
             System.out.println("Ususario nao encontrado na base de dados do Yabi");
             throw new AuthenticationServiceException("Ususario nao encontrado na base de dados do Yabi");
         }
-        System.out.println("Tentei autenticar o " + authentication.getName());
+        System.out.println("Encontrei o " + authentication.getName());
+        System.out.println(user);
         return new YabiAuthenticationToken(authentication.getName(), "senha?", user);
     }
 

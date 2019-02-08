@@ -16,7 +16,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -39,6 +41,12 @@ public class DatabaseReaderController {
     @RequestMapping("/user")
     public String user(Authentication usr){
         
+        return ((YabiUser) usr.getDetails()).toString();
+    }
+    
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    public String userPost(Authentication usr, @RequestBody String body){
+        System.out.println(body);
         return ((YabiUser) usr.getDetails()).toString();
     }
 }
