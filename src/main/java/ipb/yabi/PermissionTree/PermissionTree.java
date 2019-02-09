@@ -52,7 +52,7 @@ public @Data class PermissionTree {
     
     @Override
     public String toString(){
-        return "«" +this.id + " "+ this.nodePath +"»";
+        return this.id + "," + this.nodePath;
     }
 
 }

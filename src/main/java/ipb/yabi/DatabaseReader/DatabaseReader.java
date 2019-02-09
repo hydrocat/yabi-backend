@@ -12,8 +12,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 
+@Component
 public class DatabaseReader {
 
     SqlQueryRepository queryRepo;
@@ -27,6 +30,7 @@ public class DatabaseReader {
     public DatabaseReader() {
     }
 
+    @CrossOrigin
     public ArrayList<ArrayList<String>> runQuery(@PathVariable String queryId)
             throws SQLException {
         ArrayList<ArrayList<String>> result = new ArrayList<>();
