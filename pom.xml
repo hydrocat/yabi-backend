@@ -22,9 +22,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <org.mapstruct.version>1.2.0.Final</org.mapstruct.version>
     </properties>
     
     <dependencies>
+        
         <!-- Database Drivers -->
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
@@ -51,7 +53,7 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <!-- LDAP -->
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
@@ -105,6 +107,7 @@
     
     <build>
         <plugins>
+            
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

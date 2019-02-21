@@ -19,29 +19,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Component
 public class DatabaseReader {
 
-    SqlQueryRepository queryRepo;
-    DirectoryRepository dirRepo;
-
-    public DatabaseReader(SqlQueryRepository repo, DirectoryRepository dr) {
-        queryRepo = repo;
-        dirRepo = dr;
-    }
-
     public DatabaseReader() {
     }
 
     @CrossOrigin
-    public ArrayList<ArrayList<String>> runQuery(@PathVariable String queryId)
+    public static ArrayList<ArrayList<String>> runQuery(SqlQuery query)
             throws SQLException {
-        ArrayList<ArrayList<String>> result = new ArrayList<>();
-
-        System.out.println(queryRepo.findAll());
-        SqlQuery query = queryRepo.findById(Long.parseLong(queryId)).get();
+        
         System.out.println("Command: " + query.getCommand());
-        if (query == null) {
-            System.out.println("Query not found");
-            return result;
-        }
         Directory dir = query.getDirectory();
         System.out.println("Database: " + dir.getName());
 
@@ -56,7 +41,7 @@ public class DatabaseReader {
         return readResultSet(rs);
     }
 
-    private ArrayList<ArrayList<String>> readResultSet(ResultSet rs)
+    private static ArrayList<ArrayList<String>> readResultSet(ResultSet rs)
             throws SQLException {
 
         ArrayList<ArrayList<String>> data = new ArrayList<>();//return variable
@@ -81,7 +66,7 @@ public class DatabaseReader {
         return data;
     }
 
-    private ArrayList<String> readRow(
+    private static ArrayList<String> readRow(
             ResultSet rs,
             int columnCount)
             throws SQLException {
@@ -94,7 +79,7 @@ public class DatabaseReader {
         return row;
     }
 
-    private ArrayList<Integer> readTypes(ResultSetMetaData rsmd) throws SQLException {
+    private static ArrayList<Integer> readTypes(ResultSetMetaData rsmd) throws SQLException {
         long columnCount = rsmd.getColumnCount();
 
         ArrayList<Integer> types = new ArrayList<>();

@@ -16,7 +16,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-
 /**
  *
  * @author hydrocat
@@ -26,9 +25,10 @@ public class AuthProvider implements AuthenticationProvider {
 
     @Autowired
     YabiUserRepository userRepo;
-    
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        System.out.println(authentication.getName() + " está tentando autenticar");
         YabiUser user = userRepo.findByName(authentication.getName());
         if (user == null) // User does not exist in database
         {
@@ -44,10 +44,10 @@ public class AuthProvider implements AuthenticationProvider {
     public boolean supports(Class<?> authentication) {
         System.out.println("Lets try this");
         return authentication.equals(
-                       YabiAuthenticationToken.class) || 
-               authentication.equals(
-                       UsernamePasswordAuthenticationToken.class
-               );
+                YabiAuthenticationToken.class)
+                || authentication.equals(
+                        UsernamePasswordAuthenticationToken.class
+                );
     }
-    
+
 }

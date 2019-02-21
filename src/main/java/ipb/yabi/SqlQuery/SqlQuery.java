@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -34,9 +35,11 @@ public @Data class SqlQuery {
     private String description;
 
     @ManyToOne
+    @JoinColumn(name = "directory_id", nullable = false)
     private Directory directory;
 
     @OneToOne
+    @JoinColumn(name = "permission", nullable = false)
     private PermissionTree permission;
 
 }
