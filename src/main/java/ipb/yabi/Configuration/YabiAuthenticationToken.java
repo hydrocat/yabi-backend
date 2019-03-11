@@ -5,16 +5,10 @@
  */
 package ipb.yabi.Configuration;
 
-import ipb.yabi.PermissionTree.PermissionTree;
 import ipb.yabi.YabiUser.YabiUser;
-import ipb.yabi.YabiUser.YabiUserRepository;
-import java.util.ArrayList;
 import java.util.Collection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.stereotype.Component;
 
 /**
  *

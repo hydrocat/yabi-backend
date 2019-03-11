@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hydrocat
  */
 @RestController
-@CrossOrigin
 public class DatabaseReaderController {
 
     @Autowired
