@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author hydrocat
  */
 @Component
-public class AuthProvider implements AuthenticationProvider {
+public class YabiAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     YabiUserRepository userRepo;
@@ -37,7 +37,8 @@ public class AuthProvider implements AuthenticationProvider {
         }
         System.out.println("Encontrei o " + authentication.getName());
         System.out.println(user);
-        return new YabiAuthenticationToken(authentication.getName(), "senha?", user);
+//        return new YabiAuthenticationToken(authentication.getName(), "senha?", user);
+        return new YabiAuthenticationToken(user.getAuthorities(), user);
     }
 
     @Override

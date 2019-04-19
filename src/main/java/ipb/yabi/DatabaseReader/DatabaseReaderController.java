@@ -38,26 +38,27 @@ public class DatabaseReaderController {
     @Autowired
     DirectoryRepository dirRepo;
 
-    @GetMapping("/runQuery/{queryId}")
-    public ArrayList<ArrayList<String>> runQuery(@PathVariable String queryId,
+    @GetMapping("/runQuery/{query}")
+    public ArrayList<ArrayList<String>> runQuery(@PathVariable SqlQuery query,
             Authentication auth)
             throws SQLException {
 
-        SqlQuery query = queryRepo.findById(new Long(queryId)).get();
+        // SqlQuery query = queryRepo.findById(new Long(queryId)).get();
         YabiUser usr = ((YabiUser) auth.getDetails());
         System.out.println("Query Permission");
         System.out.println(query.getPermission().getNodePath());
         System.out.println("Permissions");
-        usr.getPermission().stream().forEach( p -> System.out.print("[" +p.getNodePath() + "] "));
+        usr.getPermissions().stream().forEach(p -> System.out.print("[" + p.getNodePath() + "] "));
         System.out.println("");
         // Deve haver ao menos uma permissão na qual a query é filha
         System.out.print("O Usuário pode rodar a query ?: ");
-        if (usr.getPermission().stream().anyMatch(p -> p.parentOf(query.getPermission()))) {
+        if (usr.getPermissions().stream().anyMatch(p -> p.parentOf(query.getPermission()))) {
             System.out.println("SIM!");
             return DatabaseReader.runQuery(query);
         } else {
             System.out.println("NO!");
-            throw new AuthorizationServiceException("Query %l does not belong to user %l".format(queryId, usr.getId()));
+//            throw new AuthorizationServiceException("Query %l does not belong to user %l".format(queryId, usr.getId()));
+            throw new AuthorizationServiceException("Query does not belong to user");
         }
     }
 }

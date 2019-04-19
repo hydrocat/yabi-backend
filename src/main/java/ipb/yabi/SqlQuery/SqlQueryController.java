@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,12 +26,12 @@ public class SqlQueryController {
     
     @CrossOrigin
     @GetMapping("/queries")
-//    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     public List<SqlQueryViewModel> getQueries(Authentication auth){
         YabiUser user = (YabiUser) auth.getDetails();
         List<SqlQueryViewModel> queries = new ArrayList<>();
         
-        for ( PermissionTree permission : user.getPermission() ){
+        for ( PermissionTree permission : user.getPermissions() ){
             for ( SqlQuery q : queryRepo.findByPermissionNodePathStartingWith(permission.getNodePath()) ){
                 queries.add( new SqlQueryViewModel(q) );
             }

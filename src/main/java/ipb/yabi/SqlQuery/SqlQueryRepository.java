@@ -8,5 +8,4 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public interface SqlQueryRepository extends PagingAndSortingRepository<SqlQuery, Long> {
     public SqlQuery findByName(String name);
     public List<SqlQuery> findByPermissionNodePathStartingWith( String nodePath );
-
 }

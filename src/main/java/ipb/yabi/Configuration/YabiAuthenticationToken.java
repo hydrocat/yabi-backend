@@ -6,24 +6,42 @@
 package ipb.yabi.Configuration;
 
 import ipb.yabi.YabiUser.YabiUser;
+import java.io.IOException;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.security.auth.Subject;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
  * @author hydrocat
  */
-public class YabiAuthenticationToken extends UsernamePasswordAuthenticationToken {
+public class YabiAuthenticationToken extends AbstractAuthenticationToken {
 
-    public YabiAuthenticationToken(Object principal, Object credentials, YabiUser user) {
-        super(principal, credentials);
-        super.setDetails(user);
+    public YabiAuthenticationToken(Collection<? extends GrantedAuthority> authorities, UserDetails details) {
+        super(authorities);
+        this.setDetails(details);
+        this.setAuthenticated(true);
     }
 
-    public YabiAuthenticationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities, YabiUser user) {
-        super(principal, credentials, authorities);
-        super.setDetails(user);
+
+    @Override
+    public Object getCredentials() {
+        return this.getDetails();
+    }
+
+    @Override
+    public Object getPrincipal() {
+        return this.getDetails();
+    }
+
+    @Override
+    public boolean implies(Subject sbjct) {
+        return super.implies(sbjct);
     }
     
 }

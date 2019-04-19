@@ -5,8 +5,18 @@
  */
 package ipb.yabi.Configuration;
 
+import ipb.yabi.YabiUser.YabiUser;
 import ipb.yabi.YabiUser.YabiUserRepository;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,14 +25,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  *
  * @author hydrocat
  */
-public class YabiUserDetailsService implements UserDetailsService {
+public class YabiUserDetailsService implements AuthenticationUserDetailsService {
 
     @Autowired
     YabiUserRepository userRepo;
-    
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return ((UserDetails) userRepo.findByName(username));
+    public UserDetails loadUserDetails(Authentication token) throws UsernameNotFoundException {
+        YabiUser u = (YabiUser) token.getPrincipal();
+        SecurityContextHolder.getContext().setAuthentication(new YabiAuthenticationToken(Arrays.asList(new SimpleGrantedAuthority(u.getRole().toString())), u));
+        return u;
+//        return ((UserDetails) userRepo.findByName(username));
     }
-    
+
 }
