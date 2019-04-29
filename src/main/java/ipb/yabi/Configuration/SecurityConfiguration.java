@@ -39,7 +39,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/user").permitAll()
-                .antMatchers("/authtest").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .logout().permitAll();
