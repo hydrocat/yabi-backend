@@ -32,10 +32,17 @@ public class YabiUserDetailsService implements AuthenticationUserDetailsService 
 
     @Override
     public UserDetails loadUserDetails(Authentication token) throws UsernameNotFoundException {
-        YabiUser u = (YabiUser) token.getPrincipal();
-        SecurityContextHolder.getContext().setAuthentication(new YabiAuthenticationToken(Arrays.asList(new SimpleGrantedAuthority(u.getRole().toString())), u));
-        return u;
-//        return ((UserDetails) userRepo.findByName(username));
+        YabiUser user = (YabiUser) token.getPrincipal();
+        SecurityContextHolder.getContext()
+                .setAuthentication(
+                        new YabiAuthenticationToken(
+                                Arrays.asList(
+                                        new SimpleGrantedAuthority(
+                                                user.getRole().toString()
+                                        )
+                                ),
+                                user));
+        return user;
     }
 
 }

@@ -1,9 +1,7 @@
 package ipb.yabi.DatabaseReader;
 
 import ipb.yabi.Directory.Directory;
-import ipb.yabi.Directory.DirectoryRepository;
 import ipb.yabi.SqlQuery.SqlQuery;
-import ipb.yabi.SqlQuery.SqlQueryRepository;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,24 +9,22 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Component
 public class DatabaseReader {
 
-    public DatabaseReader() {
-    }
+    private static Logger logger = LoggerFactory.getLogger( DatabaseReader.class );
 
     @CrossOrigin
     public static ArrayList<ArrayList<String>> runQuery(SqlQuery query)
             throws SQLException {
-        
-        System.out.println("Command: " + query.getCommand());
+
         Directory dir = query.getDirectory();
-        System.out.println("Database: " + dir.getName());
+        logger.info(String.format("Running command: {} on database {}", query.getCommand(), dir.getName()));
 
         Connection con = DriverManager.getConnection(
                 dir.getConnectionString(),

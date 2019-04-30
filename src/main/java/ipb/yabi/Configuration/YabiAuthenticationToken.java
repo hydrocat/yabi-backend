@@ -28,7 +28,6 @@ public class YabiAuthenticationToken extends AbstractAuthenticationToken {
         this.setAuthenticated(true);
     }
 
-
     @Override
     public Object getCredentials() {
         return this.getDetails();

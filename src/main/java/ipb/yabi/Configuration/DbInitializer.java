@@ -6,8 +6,10 @@ import ipb.yabi.YabiUser.Role;
 import ipb.yabi.YabiUser.YabiUser;
 import ipb.yabi.YabiUser.YabiUserRepository;
 import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,29 +19,27 @@ import org.springframework.stereotype.Component;
  * This component is started only when app.db-init property is set to true
  */
 @Component
-@ConditionalOnProperty(name = "app.db-init", havingValue = "true")
+@ConditionalOnProperty(name = "yabi.db.init", havingValue = "true")
 public class DbInitializer implements CommandLineRunner {
 
-    private final PermissionRepository pr;
-    private final YabiUserRepository userRepo;
+    @Autowired
+    private Environment env;
+    @Autowired
+    private PermissionRepository pr;
+    @Autowired
+    private YabiUserRepository userRepo;
 
-    public DbInitializer(PermissionRepository pr, YabiUserRepository ur) {
-        this.pr = pr;
-        this.userRepo = ur;
-    }
 
     @Override
     public void run(String... strings) throws Exception {
         pr.deleteAll();
-        System.out.println(PermissionTree.rootNode());
+
         PermissionTree pt = pr.save(PermissionTree.rootNode());
         
         ArrayList<PermissionTree> apt = new ArrayList<>();
         apt.add(pt);
         
-        PermissionTree child = pt.addChild("estig", "uma categoria de teste");
-        userRepo.save( new YabiUser(0l, "admin", apt, Role.ROLE_ADMIN));
-        userRepo.save( new YabiUser(1l, "professor", apt, Role.ROLE_USER));
+        userRepo.save( new YabiUser(0l, env.getProperty("yabi.db.init.admin.username"), apt, Role.ROLE_ADMIN));
         
         System.out.println(" -- Database has been initialized");
     }

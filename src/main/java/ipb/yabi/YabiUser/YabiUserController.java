@@ -18,12 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class YabiUserController {
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PreAuthorize("isAuthenticated()")
-//    @PreAuthorize("authentication.getDetails().getRole().toString().equals(\"ROLE_ADMIN\")")
     @GetMapping("/user")
     YabiUserViewModel user(Authentication auth) {
+        // Need a YabiUserViewModel to avoid the recursion in PermissionTree model
         return new YabiUserViewModel( ((YabiUser) auth.getDetails()) );
-//        return auth.getDetails();
     }
 }

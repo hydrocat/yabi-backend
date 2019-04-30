@@ -1,16 +1,10 @@
 package ipb.yabi.PermissionTree;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import ipb.yabi.YabiUser.YabiUser;
-import java.util.Arrays;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import lombok.Data;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import lombok.NoArgsConstructor;
 
@@ -64,7 +58,6 @@ public @Data class PermissionTree {
     public PermissionTree addChild(String name, String description) {
         PermissionTree pt = new PermissionTree();
         if (name.contains("/")) {
-            System.out.println("nodePath must not contain the \'/\' character");
             throw new Error("nodePath must not contain the \'/\' character");
         }
         pt.setNodePath(this.nodePath.concat("/").concat(name));

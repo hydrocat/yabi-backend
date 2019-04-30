@@ -23,9 +23,9 @@ public class PermissionTreeController {
     @Autowired
     PermissionRepository pr;
 
-    @DeleteMapping("/permission/{node}")
-    public List<Long> deleteNode(@PathVariable PermissionTree node) {
-        List<PermissionTree> permissions = pr.findAllBynodePathStartingWith(node.getNodePath());
+    @DeleteMapping("/permission/{permission}")
+    public List<Long> deleteNode(@PathVariable PermissionTree permission) {
+        List<PermissionTree> permissions = pr.findAllBynodePathStartingWith(permission.getNodePath());
         
         List<Long> deletedIds = permissions.stream().map( p -> p.getId()).collect( Collectors.toList() );
         permissions.forEach(pr::delete);

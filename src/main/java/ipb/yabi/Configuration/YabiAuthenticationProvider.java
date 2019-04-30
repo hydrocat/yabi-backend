@@ -7,6 +7,8 @@ package ipb.yabi.Configuration;
 
 import ipb.yabi.YabiUser.YabiUser;
 import ipb.yabi.YabiUser.YabiUserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -24,26 +26,25 @@ import org.springframework.transaction.annotation.Transactional;
 public class YabiAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    YabiUserRepository userRepo;
+    private YabiUserRepository userRepo;
+    
+    private final Logger logger = LoggerFactory.getLogger(YabiAuthenticationProvider.class);
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        System.out.println(authentication.getName() + " está tentando autenticar");
+        
         YabiUser user = userRepo.findByName(authentication.getName());
         if (user == null) // User does not exist in database
         {
-            System.out.println("Ususario nao encontrado na base de dados do Yabi");
-            throw new AuthenticationServiceException("Ususario nao encontrado na base de dados do Yabi");
+            logger.info("User not found in Yabi Database");
+            throw new AuthenticationServiceException("User not found in Yabi Database");
         }
-        System.out.println("Encontrei o " + authentication.getName());
-        System.out.println(user);
-//        return new YabiAuthenticationToken(authentication.getName(), "senha?", user);
+
         return new YabiAuthenticationToken(user.getAuthorities(), user);
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        System.out.println("Lets try this");
         return authentication.equals(
                 YabiAuthenticationToken.class)
                 || authentication.equals(

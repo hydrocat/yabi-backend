@@ -1,0 +1,8 @@
+ __  _____   ___  ____
+ \ \/ / _ |-/ _ )/  _/
+  \  / __ |/ _  |/ /
+  /_/_/-|_/____/___/
+${Ansi.YELLOW} Yet Another Business Inteligence${Ansi.DEFAULT}
+
+ Powerd by
+   - Spring and Angular

@@ -1,9 +1,7 @@
 package ipb.yabi.YabiUser;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
 
 /**
  *
@@ -19,7 +17,5 @@ public class YabiUserViewModel {
         permissions = user.getPermissions().stream().map(x -> x.getNodePath() ).collect(Collectors.toList());
         name = user.getName();
         role = user.getRole();
-    }
-    
-    
+    }   
 }

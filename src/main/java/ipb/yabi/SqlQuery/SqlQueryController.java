@@ -26,7 +26,6 @@ public class SqlQueryController {
     
     @CrossOrigin
     @GetMapping("/queries")
-    @PreAuthorize("isAuthenticated()")
     public List<SqlQueryViewModel> getQueries(Authentication auth){
         YabiUser user = (YabiUser) auth.getDetails();
         List<SqlQueryViewModel> queries = new ArrayList<>();
