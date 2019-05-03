@@ -37,7 +37,7 @@ public class PermissionTreeController {
     public List<PermissionTreeViewModel> myPermissions(Authentication auth) {
         List pl = new ArrayList<PermissionTreeViewModel>();
   
-        for (PermissionTree userPermission : ((YabiUser) auth.getDetails()).getPermissions()) {
+        for (PermissionTree userPermission : ((YabiUser) auth.getPrincipal()).getPermissions()) {
             for (PermissionTree p : pr.findAllBynodePathStartingWith( userPermission.getNodePath() )) {
                 pl.add(new PermissionTreeViewModel(p));
             }

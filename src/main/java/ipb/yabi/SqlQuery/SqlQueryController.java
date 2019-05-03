@@ -27,7 +27,7 @@ public class SqlQueryController {
     @CrossOrigin
     @GetMapping("/queries")
     public List<SqlQueryViewModel> getQueries(Authentication auth){
-        YabiUser user = (YabiUser) auth.getDetails();
+        YabiUser user = (YabiUser) auth.getPrincipal();
         List<SqlQueryViewModel> queries = new ArrayList<>();
         
         for ( PermissionTree permission : user.getPermissions() ){

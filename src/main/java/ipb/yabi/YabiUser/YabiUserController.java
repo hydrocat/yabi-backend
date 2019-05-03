@@ -21,6 +21,6 @@ public class YabiUserController {
     @GetMapping("/user")
     YabiUserViewModel user(Authentication auth) {
         // Need a YabiUserViewModel to avoid the recursion in PermissionTree model
-        return new YabiUserViewModel( ((YabiUser) auth.getDetails()) );
+        return new YabiUserViewModel( (YabiUser) auth.getPrincipal() );
     }
 }

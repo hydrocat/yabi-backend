@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 /**
  *
@@ -25,35 +26,54 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
+    
     @Autowired
     public SecurityConfiguration() {
     }
-
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .cors()
                 .and()
                 .csrf().disable()
-                .httpBasic()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/user").permitAll()
-                // Spring Repositories
-                .antMatchers("/directories/**", "/yabiUsers/**", "/permissionTrees/**", "/sqlQueries/**").hasRole("ADMIN")
-                // Custom Controllers
-                .antMatchers(HttpMethod.DELETE, "/permission/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .logout().permitAll();
+                .httpBasic();
+        //.and()
+        //.authorizeRequests()
+        //.antMatchers("/user").permitAll()
+        // Spring Repositories
+        //.antMatchers("/directories/**", "/yabiUsers/**", "/permissionTrees/**", "/sqlQueries/**").hasRole("ADMIN")
+        // Custom Controllers
+        //.antMatchers(HttpMethod.DELETE, "/permission/**").hasRole("ADMIN")
+        //.anyRequest().authenticated()
+        //.and()
+        //.logout().permitAll();
     }
-
+    
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth, YabiAuthenticationProvider ap) throws Exception {
-//        auth.authenticationProvider(ap);
-        auth.authenticationProvider(ap);
-                
+    public void configureGlobal(AuthenticationManagerBuilder auth, YabiUserDetailsContextMapper ap, YabiPasswordEncoder pe) throws Exception {
+        auth
+                .ldapAuthentication()
+                .userDetailsContextMapper(ap)
+                .userDnPatterns("uid={0},ou=users")
+                .groupSearchBase("ou=groups")
+                .contextSource()
+                .url("ldap://localhost:10389/dc=ipb,dc=pt")
+                .and()
+                .passwordCompare()
+                .passwordEncoder(pe)
+                .passwordAttribute("userPassword");
+        // auth.authenticationProvider(ap);;
+//        auth
+//                .ldapAuthentication()
+//                .userSearchFilter("(uid={0})")
+//                .userSearchBase("ou=users,dc=ipb,dc=pt")
+//                .ldapAuthoritiesPopulator(ds)
+//                
+////                .groupSearchBase("ou=groups,dc=ipb,dc=pt");
+//                .contextSource().url("ldaps://localhost:10636")
+//                .and().ldapAuthoritiesPopulator(ds);
+
 //                .userSearchFilter("(uid={0})")
 //                .userSearchBase("ou=users,dc=ipb,dc=pt")
 //                .groupSearchBase("ou=groups,dc=ipb,dc=pt")

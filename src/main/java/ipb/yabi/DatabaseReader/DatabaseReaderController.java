@@ -34,7 +34,7 @@ public class DatabaseReaderController {
             Authentication auth)
             throws SQLException {
 
-        YabiUser user = ((YabiUser) auth.getDetails());
+        YabiUser user = ((YabiUser) auth.getPrincipal());
         // User must have at least one permission in which this query is child of
         if (user.getPermissions().stream().anyMatch(p -> p.parentOf(query.getPermission()))) {
             logger.info("User {} has permission to run query {}", user.getName(), query.getName());
