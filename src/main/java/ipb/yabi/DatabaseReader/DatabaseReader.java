@@ -24,7 +24,7 @@ public class DatabaseReader {
             throws SQLException {
 
         Directory dir = query.getDirectory();
-        logger.info(String.format("Running command: {} on database {}", query.getCommand(), dir.getName()));
+        logger.info("Running command: {} on database {}", query.getCommand(), dir.getName());
 
         Connection con = DriverManager.getConnection(
                 dir.getConnectionString(),
