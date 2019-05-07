@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -28,6 +29,9 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Autowired
+    Environment env;
+    
+    @Autowired
     public SecurityConfiguration() {
     }
     
@@ -37,46 +41,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .csrf().disable()
-                .httpBasic();
-        //.and()
-        //.authorizeRequests()
-        //.antMatchers("/user").permitAll()
-        // Spring Repositories
-        //.antMatchers("/directories/**", "/yabiUsers/**", "/permissionTrees/**", "/sqlQueries/**").hasRole("ADMIN")
-        // Custom Controllers
-        //.antMatchers(HttpMethod.DELETE, "/permission/**").hasRole("ADMIN")
-        //.anyRequest().authenticated()
-        //.and()
-        //.logout().permitAll();
+                .httpBasic()
+        .and()
+        .authorizeRequests()
+        .antMatchers("/user").permitAll()
+         // Spring Repositories
+        .antMatchers("/directories/**", "/yabiUsers/**", "/permissionTrees/**", "/sqlQueries/**").hasRole("ADMIN")
+         // Custom Controllers
+        .antMatchers(HttpMethod.DELETE, "/permission/**").hasRole("ADMIN")
+        .anyRequest().authenticated()
+        .and()
+        .logout().permitAll();
     }
     
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth, YabiUserDetailsContextMapper ap, YabiPasswordEncoder pe) throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth, YabiUserDetailsContextMapper ap) throws Exception {
         auth
                 .ldapAuthentication()
                 .userDetailsContextMapper(ap)
-                .userDnPatterns("uid={0},ou=users")
-                .groupSearchBase("ou=groups")
+                .userDnPatterns(env.getProperty("yabi.ldap.userDnPatterns"))
+                .groupSearchBase(env.getProperty("yabi.ldap.groupSearchBase"))
                 .contextSource()
-                .url("ldap://localhost:10389/dc=ipb,dc=pt");
-//                .and()
-//                .passwordCompare()
-//                .passwordEncoder(pe)
-//                .passwordAttribute("userPassword");
-        // auth.authenticationProvider(ap);;
-//        auth
-//                .ldapAuthentication()
-//                .userSearchFilter("(uid={0})")
-//                .userSearchBase("ou=users,dc=ipb,dc=pt")
-//                .ldapAuthoritiesPopulator(ds)
-//                
-////                .groupSearchBase("ou=groups,dc=ipb,dc=pt");
-//                .contextSource().url("ldaps://localhost:10636")
-//                .and().ldapAuthoritiesPopulator(ds);
-
-//                .userSearchFilter("(uid={0})")
-//                .userSearchBase("ou=users,dc=ipb,dc=pt")
-//                .groupSearchBase("ou=groups,dc=ipb,dc=pt")
-//                .contextSource().url("ldaps://ldap.ipb.pt:636");
+                .url(env.getProperty("yabi.ldap.url"));
     }
 }
