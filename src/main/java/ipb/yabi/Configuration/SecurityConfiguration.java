@@ -58,11 +58,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .userDnPatterns("uid={0},ou=users")
                 .groupSearchBase("ou=groups")
                 .contextSource()
-                .url("ldap://localhost:10389/dc=ipb,dc=pt")
-                .and()
-                .passwordCompare()
-                .passwordEncoder(pe)
-                .passwordAttribute("userPassword");
+                .url("ldap://localhost:10389/dc=ipb,dc=pt");
+//                .and()
+//                .passwordCompare()
+//                .passwordEncoder(pe)
+//                .passwordAttribute("userPassword");
         // auth.authenticationProvider(ap);;
 //        auth
 //                .ldapAuthentication()
