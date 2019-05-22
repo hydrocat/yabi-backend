@@ -29,7 +29,7 @@ public @Data class SqlQuery {
     @GeneratedValue
     private Long id;
 
-    @Column(length = 1024)
+    @Column(length = 2048)
     private String command;
     
     private String name;
