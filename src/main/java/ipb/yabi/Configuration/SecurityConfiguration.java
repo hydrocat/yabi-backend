@@ -27,14 +27,14 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    
+
     @Autowired
     Environment env;
-    
+
     @Autowired
     public SecurityConfiguration() {
     }
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -42,18 +42,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .httpBasic()
-        .and()
-        .authorizeRequests()
-        .antMatchers("/user").permitAll()
-         // Spring Repositories
-        .antMatchers("/directories/**", "/yabiUsers/**", "/permissionTrees/**", "/sqlQueries/**").hasRole("ADMIN")
-         // Custom Controllers
-        .antMatchers(HttpMethod.DELETE, "/permission/**").hasRole("ADMIN")
-        .anyRequest().authenticated()
-        .and()
-        .logout().permitAll();
+                .and()
+                .authorizeRequests()
+                .antMatchers("/user").permitAll()
+                // Spring Repositories
+                .antMatchers("/directories/**", "/yabiUsers/**", "/permissionTrees/**", "/sqlQueries/**").hasRole("ADMIN")
+                // Custom Controllers
+                .antMatchers(HttpMethod.DELETE, "/permission/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .logout().permitAll();
     }
-    
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth, YabiUserDetailsContextMapper ap) throws Exception {
         auth

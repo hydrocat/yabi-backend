@@ -23,7 +23,6 @@ public class WebConfiguration implements WebMvcConfigurer {
                 .allowedOrigins(
                         env.getProperty("yabi.web.allowedOrigins")
                                 .split(","))
-                .exposedHeaders("Set-Cookie")
                 .allowedHeaders("*");
     }
 }

@@ -31,7 +31,7 @@ public class PermissionTreeController {
         if (permission.parentOf(PermissionTree.rootNode())) {
             throw new HttpClientErrorException(HttpStatus.FORBIDDEN,"Cannot delete root node");
         }
-        List<PermissionTree> permissions = pr.findAllBynodePathStartingWith(permission.getNodePath());
+        List<PermissionTree> permissions = pr.findAllByNodePathStartingWith(permission.getNodePath());
         
         List<Long> deletedIds = permissions.stream().map( p -> p.getId()).collect( Collectors.toList() );
         permissions.forEach(pr::delete);
@@ -44,7 +44,7 @@ public class PermissionTreeController {
         List pl = new ArrayList<PermissionTreeViewModel>();
   
         for (PermissionTree userPermission : ((YabiUser) auth.getPrincipal()).getPermissions()) {
-            for (PermissionTree p : pr.findAllBynodePathStartingWith( userPermission.getNodePath() )) {
+            for (PermissionTree p : pr.findAllByNodePathStartingWith( userPermission.getNodePath() )) {
                 pl.add(new PermissionTreeViewModel(p));
             }
         }

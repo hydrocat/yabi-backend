@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  * This component is started only when app.db-init property is set to true
  */
 @Component
-@ConditionalOnProperty(name = "yabi.db.init", havingValue = "true")
+@ConditionalOnProperty(name = "yabi.db.init", havingValue = "create")
 public class DbInitializer implements CommandLineRunner {
 
     @Autowired
